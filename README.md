@@ -33,3 +33,4 @@ Finalmente, puede probar su proceso de cifrado y descifrado:
 Imagen para publicación
 Imagen para publicación
 Gracias..
+https://miro.medium.com/max/498/0*NAp-dHpgIJ5I2Ybh.png
