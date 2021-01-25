@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Scanner;
 import javax.crypto.BadPaddingException;
 
 import javax.crypto.Cipher;
@@ -17,6 +18,7 @@ public class demo {
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
+    private static final String key1 = "123";
 
     public static void setKey(String myKey) {
         try {
@@ -57,6 +59,35 @@ public class demo {
         return null;
     }
 
+    public static String Encriptar(String password){
+        try {
+            byte[] keyData = (key1).getBytes();
+            SecretKeySpec secretKeySpec = new SecretKeySpec(keyData, "Blowfish");
+            Cipher cipher = Cipher.getInstance("Blowfish");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+            byte[] hasil = cipher.doFinal(password.getBytes());
+            return new String(Base64.getEncoder().encode(hasil));
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String Desencriptar(String string){
+        try {
+            byte[] keyData = (key1).getBytes();
+            SecretKeySpec secretKeySpec = new SecretKeySpec(keyData, "Blowfish");
+            Cipher cipher = Cipher.getInstance("Blowfish");
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+            byte[] hasil = cipher.doFinal(Base64.getDecoder().decode(string));
+            return new String(hasil);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static void main(String[] args) {
         String secretKey = "MiClaveSecreta";
 
@@ -67,6 +98,20 @@ public class demo {
         System.out.println("Password ->" + originalString);
         System.out.println("Encriptacion ->" + encryptedString);
         System.out.println("Descencriptacion ->" + decryptedString);
+
+        Scanner entrada = new Scanner(System.in);
+        String password;
+        String string;
+
+        //Input para encriptar
+        System.out.println("El texto a encriptar es:");
+        password = entrada.nextLine();
+        System.out.println("El texto encriptado es" + Encriptar(password));
+
+        //Input para Desencriptar
+        System.out.println("El texto a desencriptar es:");
+        string = entrada.nextLine();
+        System.out.println("El texto desencriptado es:" + Desencriptar(Encriptar(password)));
 
     }
 
